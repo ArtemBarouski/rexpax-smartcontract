@@ -3,7 +3,6 @@ pragma solidity 0.4.19;
 
 contract owned {
     address public owner;
-    address public candidate;
 
     // The one who sent Rexpax the contract to the blockchain, will automatically become the owner of the contract
     function owned() internal {
@@ -16,17 +15,9 @@ contract owned {
         _;
     }
 
-    // To change the owner of the contract, putting the candidate
-    function changeOwner(address _owner) onlyOwner public {
-        candidate = _owner;
-    }
-
-    // The candidate must call this function to accept the proposal for the transfer of the rights of contract ownership
-    function acceptOwner() public {
-        require(candidate != address(0));
-        require(candidate == msg.sender);
-        owner = candidate;
-        delete candidate;
+    // Change the owner of the contract
+    function changeOwner(address newOwner) onlyOwner public {
+        owner = newOwner;
     }
 }
 
